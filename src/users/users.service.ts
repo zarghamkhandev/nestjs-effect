@@ -3,9 +3,9 @@ import * as Effect from '@effect/io/Effect';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
-import { createUserEffect, getUsersEffect } from '../pure';
-import { UsersRepository } from '../tags';
+import { UserEntity } from './entities/user.entity';
+import { createUserEffect, getUsersEffect } from './pure';
+import { UsersRepository } from './tags';
 
 @Injectable()
 export class UsersService {

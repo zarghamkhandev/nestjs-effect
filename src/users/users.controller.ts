@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UsersService } from './services/users.service';
+import { UsersService } from './users.service';
 import * as Effect from '@effect/io/Effect';
 import { CreateUserDto } from './dto/create-user.dto';
 import { pipe } from '@effect/data/Function';
