@@ -1,11 +1,11 @@
 import { BadRequestException, Controller, Get } from '@nestjs/common';
-import { UsersEffect } from './effects/users.effect';
+import { UsersService } from './services/users.service';
 import * as Effect from '@effect/io/Effect';
 import { UsersNotFoundException } from './errors';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersEffect: UsersEffect) {}
+  constructor(private readonly usersEffect: UsersService) {}
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {
