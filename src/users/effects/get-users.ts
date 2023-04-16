@@ -1,13 +1,13 @@
 import { pipe } from '@effect/data/Function';
 import * as Effect from '@effect/io/Effect';
-import { UsersDAOTag } from '../dao/users.dao';
 import { UsersNotFoundException } from '../errors';
+import { UsersRepositoryTag } from '../tags';
 
-export const findAllUsersEffect = pipe(
-  UsersDAOTag,
-  Effect.flatMap(({ findAll }) => {
+export const getUsersEffect = pipe(
+  UsersRepositoryTag,
+  Effect.flatMap(({ find }) => {
     return Effect.tryCatchPromise(
-      () => findAll(),
+      () => find(),
       () => new UsersNotFoundException(),
     );
   }),
