@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './config/data-source';
 import { UsersModule } from './users/users.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
