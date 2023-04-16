@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import { getUsersEffect } from '../pure';
-import { UsersRepositoryTag } from '../tags';
+import { UsersRepository } from '../tags';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +17,7 @@ export class UsersService {
   findAllUsers() {
     return pipe(
       getUsersEffect,
-      Effect.provideService(UsersRepositoryTag, this.usersRepository),
+      Effect.provideService(UsersRepository, this.usersRepository),
     );
   }
 }

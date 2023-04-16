@@ -1,9 +1,9 @@
 import { pipe } from '@effect/data/Function';
 import * as Effect from '@effect/io/Effect';
-import { UsersRepositoryTag } from '../tags';
+import { UsersRepository } from '../tags';
 
 export const getUsersEffect = pipe(
-  UsersRepositoryTag,
+  UsersRepository,
   Effect.flatMap(({ find }) => {
     return Effect.tryPromise(() => find());
   }),
