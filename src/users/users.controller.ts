@@ -1,11 +1,10 @@
-import { BadRequestException, Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import * as Effect from '@effect/io/Effect';
-import { UsersNotFoundException } from './errors';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersEffect: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {
@@ -14,7 +13,7 @@ export class UsersController {
 
   @Get()
   async findAll() {
-    const users = await Effect.runPromise(this.usersEffect.findAllUsers());
+    const users = await Effect.runPromise(this.usersService.findAllUsers());
     return users;
   }
 
