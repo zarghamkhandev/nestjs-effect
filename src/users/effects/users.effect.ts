@@ -1,4 +1,4 @@
-import { pipe } from '@effect-ts/core/Function';
+import { pipe } from '@effect/data/Function';
 import * as Effect from '@effect/io/Effect';
 import { UsersDAO } from '../dao/users.dao';
 import { UserNotFoundException, UsersNotFoundException } from '../errors';
@@ -6,14 +6,12 @@ import { UserNotFoundException, UsersNotFoundException } from '../errors';
 export class UsersEffect {
   constructor(private readonly usersDAO: UsersDAO) {}
 
-  findAllUsersEffect = pipe(
-    Effect.tryCatchPromise(
-      () => this.usersDAO.findAll(),
-      () => new UsersNotFoundException(),
-    ),
+  findAllUsers = Effect.tryCatchPromise(
+    () => this.usersDAO.findAll(),
+    () => new UsersNotFoundException(),
   );
 
-  findOneUserEffect = (id: string) =>
+  findOneUser = (id: string) =>
     pipe(
       Effect.tryCatchPromise(
         () => this.usersDAO.findOne(id),

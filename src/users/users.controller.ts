@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
-import { UsersDAO } from './dao/users.dao';
+import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { UsersEffect } from './effects/users.effect';
+import * as Effect from '@effect/io/Effect';
+import { UsersNotFoundException } from './errors';
 
 @Controller('users')
 export class UsersController {
@@ -12,7 +13,16 @@ export class UsersController {
   // }
 
   @Get()
-  findAll() {}
+  async findAll() {
+    return Effect.runPromise(this.usersEffect.findAllUsers)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err: UsersNotFoundException) => {
+        console.log(err);
+        throw new BadRequestException();
+      });
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

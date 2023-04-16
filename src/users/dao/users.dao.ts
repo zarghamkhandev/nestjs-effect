@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserEntity } from '../entities/user.entity';
 
 @Injectable()
@@ -12,6 +10,7 @@ export class UsersDAO {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
+  // TODO: handle case when there is no entity
   async findAll(): Promise<UserEntity[]> {
     return this.usersRepository.find();
   }
