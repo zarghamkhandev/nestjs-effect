@@ -5,12 +5,11 @@ import { CommonException } from '../../exceptions';
 import { UserEntity } from '../entities/user.entity';
 import { UsersRepository } from '../tags';
 
-export const getUsersEffect: Effect.Effect<Repository<UserEntity>, CommonException, UserEntity[]> = pipe(
-  UsersRepository,
-  Effect.flatMap((repo) => {
-    return Effect.tryCatchPromise(
-      () => repo.find(),
-      (error) => new CommonException('Can not get users', error),
-    );
-  }),
-);
+export const getUsersEffect = pipe(UsersRepository, Effect.flatMap(tryFindUsers));
+
+export function tryFindUsers(repo: Repository<UserEntity>) {
+  return Effect.tryCatchPromise(
+    () => repo.find(),
+    (error) => new CommonException('Can not get users', error),
+  );
+}
