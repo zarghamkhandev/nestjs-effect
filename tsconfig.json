@@ -13,6 +13,7 @@
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
