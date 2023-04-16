@@ -1,15 +1,20 @@
 import { pipe } from '@effect/data/Function';
 import * as Effect from '@effect/io/Effect';
-import { UsersDAO } from '../dao/users.dao';
-import { UserNotFoundException, UsersNotFoundException } from '../errors';
+import { Injectable } from '@nestjs/common';
+import { UsersDAO, UsersDAOTag } from '../dao/users.dao';
+import { UserNotFoundException } from '../errors';
+import { findAllUsersEffect } from './find-all-users.effect';
 
+@Injectable()
 export class UsersEffect {
   constructor(private readonly usersDAO: UsersDAO) {}
 
-  findAllUsers = Effect.tryCatchPromise(
-    () => this.usersDAO.findAll(),
-    () => new UsersNotFoundException(),
-  );
+  findAllUsers() {
+    return pipe(
+      findAllUsersEffect,
+      Effect.provideService(UsersDAOTag, this.usersDAO),
+    );
+  }
 
   findOneUser = (id: string) =>
     pipe(

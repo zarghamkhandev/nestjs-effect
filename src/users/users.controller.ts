@@ -14,7 +14,7 @@ export class UsersController {
 
   @Get()
   async findAll() {
-    return Effect.runPromise(this.usersEffect.findAllUsers)
+    return Effect.runPromise(this.usersEffect.findAllUsers())
       .then((res) => {
         console.log(res);
       })

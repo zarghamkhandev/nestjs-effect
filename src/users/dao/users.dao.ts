@@ -1,3 +1,4 @@
+import { Tag } from '@effect/data/Context';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -5,6 +6,7 @@ import { UserEntity } from '../entities/user.entity';
 
 @Injectable()
 export class UsersDAO {
+  public readonly _tag = 'UsersDAO';
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
@@ -22,3 +24,5 @@ export class UsersDAO {
     }) as unknown as UserEntity;
   }
 }
+
+export const UsersDAOTag = Tag<UsersDAO>();
