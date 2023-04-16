@@ -15,16 +15,10 @@ export class UsersService {
   ) {}
 
   getUsers() {
-    return pipe(
-      getUsersEffect,
-      Effect.provideService(UsersRepository, this.usersRepository),
-    );
+    return pipe(getUsersEffect, Effect.provideService(UsersRepository, this.usersRepository));
   }
 
   createUser(input: UserEntity) {
-    return pipe(
-      createUserEffect(input),
-      Effect.provideService(UsersRepository, this.usersRepository),
-    );
+    return pipe(createUserEffect(input), Effect.provideService(UsersRepository, this.usersRepository));
   }
 }

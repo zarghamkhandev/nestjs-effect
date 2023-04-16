@@ -5,7 +5,9 @@ import { UserEntity } from '../entities/user.entity';
 import { CannotCreateException } from '../errors';
 import { UsersRepository } from '../tags';
 
-export const createUserEffect = (user: UserEntity) =>
+export const createUserEffect = (
+  user: UserEntity,
+): Effect.Effect<Repository<UserEntity>, CannotCreateException, UserEntity> =>
   pipe(
     UsersRepository,
     Effect.flatMap((repository) =>

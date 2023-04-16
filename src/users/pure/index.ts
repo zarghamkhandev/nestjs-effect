@@ -1,2 +1,2 @@
-export * from './get-users.effect';
-export * from './create-user.effect';
+export * from './get-users';
+export * from './create-user';

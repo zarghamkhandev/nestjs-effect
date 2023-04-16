@@ -11,9 +11,7 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = await Effect.runPromise(
-      pipe(this.usersService.createUser(createUserDto), logError),
-    );
+    const user = await Effect.runPromise(pipe(this.usersService.createUser(createUserDto), logError));
     return user;
   }
 
