@@ -14,14 +14,8 @@ export class UsersController {
 
   @Get()
   async findAll() {
-    return Effect.runPromise(this.usersEffect.findAllUsers())
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err: UsersNotFoundException) => {
-        console.log(err);
-        throw new BadRequestException();
-      });
+    const users = await Effect.runPromise(this.usersEffect.findAllUsers());
+    return users;
   }
 
   // @Get(':id')
