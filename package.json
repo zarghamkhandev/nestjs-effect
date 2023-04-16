@@ -25,6 +25,9 @@
     "migration:revert": "npm run typeorm migration:revert"
   },
   "dependencies": {
+    "@effect-ts/core": "^0.60.5",
+    "@effect/data": "^0.12.2",
+    "@effect/io": "^0.21.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
