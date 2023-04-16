@@ -14,7 +14,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  findAllUsers() {
+  getUsers() {
     return pipe(
       getUsersEffect,
       Effect.provideService(UsersRepository, this.usersRepository),

@@ -13,7 +13,7 @@ export class UsersController {
 
   @Get()
   async findAll() {
-    const users = await Effect.runPromise(this.usersService.findAllUsers());
+    const users = await Effect.runPromise(this.usersService.getUsers());
     return users;
   }
 
