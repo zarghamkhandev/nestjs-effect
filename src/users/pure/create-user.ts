@@ -5,17 +5,21 @@ import { CannotCreateException } from '../../exceptions';
 import { UserEntity } from '../entities/user.entity';
 import { UsersRepository } from '../tags';
 
-export const createUserEffect = (user: UserEntity) => pipe(UsersRepository, Effect.flatMap(tryCreateUser(user)));
-
-export const tryCreateUser = (user: UserEntity) => (repository: Repository<UserEntity>) =>
-  Effect.tryCatchPromise(
-    () => createUser(user)(repository),
-    (reason) => new CannotCreateException(user, reason),
+export const createUser = (input: UserEntity) => {
+  return pipe(
+    Effect.Do(),
+    Effect.bind('repo', () => UsersRepository),
+    Effect.bind('entity', ({ repo }) => createEntity(input)(repo)),
+    Effect.flatMap(({ entity, repo }) => createUserPromise(repo)(entity)),
+    Effect.catchAll(throwException(input)),
   );
+};
 
-export const createUser =
-  (input: UserEntity) =>
-  (repository: Repository<UserEntity>): Promise<UserEntity> => {
-    const user = repository.create(input);
-    return repository.save(user);
-  };
+export const createUserPromise = (repo: Repository<UserEntity>) => (user: UserEntity) =>
+  Effect.try(() => repo.create(user));
+
+export const createEntity = (user: UserEntity) => (repo: Repository<UserEntity>) => {
+  return Effect.tryPromise(() => repo.save(user));
+};
+
+export const throwException = (user: UserEntity) => (err: unknown) => Effect.fail(new CannotCreateException(user, err));
