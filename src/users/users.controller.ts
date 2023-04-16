@@ -3,7 +3,7 @@ import { UsersService } from './services/users.service';
 import * as Effect from '@effect/io/Effect';
 import { CreateUserDto } from './dto/create-user.dto';
 import { pipe } from '@effect/data/Function';
-import { logErrorLabel, logErrorMessage } from '../utils';
+import { logError, logErrorLabel, logErrorMessage } from '../utils';
 
 @Controller('users')
 export class UsersController {
@@ -12,7 +12,7 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await Effect.runPromise(
-      pipe(this.usersService.createUser(createUserDto), logErrorMessage),
+      pipe(this.usersService.createUser(createUserDto), logError),
     );
     return user;
   }

@@ -1,12 +1,9 @@
-export abstract class CommonException extends Error {
-  abstract _tag: string;
-  abstract _label: string;
+import { AbstractException } from './abstract.exception';
 
-  constructor(_originalError: unknown) {
-    if (_originalError instanceof Error) {
-      super(_originalError.message);
-      this.stack = _originalError.stack;
-      this.name = _originalError.name;
-    }
+export class CommonException extends AbstractException {
+  public _tag = 'CommonException';
+
+  constructor(public _label: string, _originalError: unknown) {
+    super(_originalError);
   }
 }

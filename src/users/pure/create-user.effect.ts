@@ -5,19 +5,19 @@ import { UserEntity } from '../entities/user.entity';
 import { CannotCreateException } from '../errors';
 import { UsersRepository } from '../tags';
 
-export const createUserEffect = (input: Partial<UserEntity>) =>
+export const createUserEffect = (user: UserEntity) =>
   pipe(
     UsersRepository,
     Effect.flatMap((repository) =>
       Effect.tryCatchPromise(
-        () => createUser(input)(repository),
-        (reason) => new CannotCreateException(input, reason),
+        () => createUser(user)(repository),
+        (reason) => new CannotCreateException(user, reason),
       ),
     ),
   );
 
 export const createUser =
-  (input: Partial<UserEntity>) =>
+  (input: UserEntity) =>
   (repository: Repository<UserEntity>): Promise<UserEntity> => {
     const user = repository.create(input);
     return repository.save(user);
