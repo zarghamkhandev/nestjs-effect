@@ -1,5 +1,5 @@
 import * as Effect from '@effect/io/Effect';
-import { AbstractException } from '../shared/abstract.exception';
+import { AbstractException } from '../exceptions/abstract.exception';
 
 export const logErrorMessage = Effect.catchAll((error: AbstractException) => {
   console.log(error.message);

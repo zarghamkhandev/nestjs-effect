@@ -1,7 +1,7 @@
 import { pipe } from '@effect/data/Function';
 import * as Effect from '@effect/io/Effect';
 import { Repository } from 'typeorm';
-import { CommonException } from '../../shared';
+import { CommonException } from '../../exceptions';
 import { UserEntity } from '../entities/user.entity';
 import { UsersRepository } from '../tags';
 

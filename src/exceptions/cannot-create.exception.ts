@@ -1,5 +1,5 @@
-import { UserEntity } from '../entities/user.entity';
-import { AbstractException } from '../../shared/abstract.exception';
+import { UserEntity } from '../users/entities/user.entity';
+import { AbstractException } from './abstract.exception';
 
 export class CannotCreateException extends AbstractException {
   public _tag = 'CannotCreateException ';
