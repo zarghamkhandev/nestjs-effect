@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
-import { createUserEffect, getUsersEffect } from './pure';
+import { createUser, getUsersEffect } from './pure';
 import { UsersRepository } from './tags';
 
 @Injectable()
@@ -19,6 +19,6 @@ export class UsersService {
   }
 
   createUser(input: UserEntity) {
-    return pipe(createUserEffect(input), Effect.provideService(UsersRepository, this.usersRepository));
+    return pipe(createUser(input), Effect.provideService(UsersRepository, this.usersRepository));
   }
 }
