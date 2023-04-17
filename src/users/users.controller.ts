@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import * as Effect from '@effect/io/Effect';
 import { CreateUserDto } from './dto/create-user.dto';
-import { pipe } from '@effect/data/Function';
 import { logError, logErrorLabel, logErrorMessage } from '../utils';
+import { pipe } from '../prelude';
+import { createUser, getUsersEffect } from './pure';
 
 @Controller('users')
 export class UsersController {
@@ -11,13 +11,13 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = await Effect.runPromise(pipe(this.usersService.createUser(createUserDto), logError));
+    const user = await this.usersService.runPromise(pipe(createUser(createUserDto), logError));
     return user;
   }
 
   @Get()
   async findAll() {
-    const users = await Effect.runPromise(this.usersService.getUsers());
+    const users = await this.usersService.runPromise(getUsersEffect);
     return users;
   }
 
