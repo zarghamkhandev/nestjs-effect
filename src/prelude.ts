@@ -1,3 +1,4 @@
+export * as Context from '@effect/data/Context';
 export * as Exit from '@effect/io/Exit';
 export * as Effect from '@effect/io/Effect';
 export * as Runtime from '@effect/io/Runtime';
