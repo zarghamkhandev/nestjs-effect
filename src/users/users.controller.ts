@@ -1,23 +1,23 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersRuntime } from './users.runtime';
 import { CreateUserDto } from './dto/create-user.dto';
-import { logError, logErrorLabel, logErrorMessage } from '../utils';
+import { logError } from '../utils';
 import { pipe } from '../prelude';
 import { createUser, getUsersEffect } from './pure';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersRuntime: UsersRuntime) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = await this.usersService.runPromise(pipe(createUser(createUserDto), logError));
+    const user = await this.usersRuntime.runPromise(pipe(createUser(createUserDto), logError));
     return user;
   }
 
   @Get()
   async findAll() {
-    const users = await this.usersService.runPromise(getUsersEffect);
+    const users = await this.usersRuntime.runPromise(getUsersEffect);
     return users;
   }
 
