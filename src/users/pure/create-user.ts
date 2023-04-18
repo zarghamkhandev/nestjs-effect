@@ -1,13 +1,13 @@
 import { Repository } from 'typeorm';
 import { CannotCreateException } from '../../exceptions';
 import { UserEntity } from '../entities/user.entity';
-import { UsersRepository } from '../tags';
+import { UsersRepositoryTag } from '../tags';
 import { Effect, pipe } from '../../prelude';
 
 export const createUser = (input: UserEntity) => {
   return pipe(
     Effect.Do(),
-    Effect.bind('repo', () => UsersRepository),
+    Effect.bind('repo', () => UsersRepositoryTag),
     Effect.bind('entity', ({ repo }) => createEntity(input)(repo)),
     Effect.flatMap(({ entity, repo }) => createUserPromise(repo)(entity)),
     Effect.catchAll(throwException(input)),
