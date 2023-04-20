@@ -5,7 +5,7 @@ import { ModuleRef } from '@nestjs/core';
 export const ModuleRefTag = Context.Tag<ModuleRef>();
 
 @Injectable()
-export abstract class RunTimeBase<A> implements OnModuleInit, OnModuleDestroy {
+export abstract class RuntimeBase<A> implements OnModuleInit, OnModuleDestroy {
   constructor(private moduleRef: ModuleRef) { }
   abstract layer: Layer.Layer<ModuleRef, never, A>;
   protected rt: {
