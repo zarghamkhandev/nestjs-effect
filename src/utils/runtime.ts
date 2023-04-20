@@ -1,11 +1,12 @@
-import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Context, Effect, Exit, Layer, Runtime, Scope, pipe } from '../prelude';
 import { ModuleRef } from '@nestjs/core';
 
 export const ModuleRefTag = Context.Tag<ModuleRef>();
 
+@Injectable()
 export abstract class RunTimeBase<A> implements OnModuleInit, OnModuleDestroy {
-  constructor(private moduleRef: ModuleRef) {}
+  constructor(private moduleRef: ModuleRef) { }
   abstract layer: Layer.Layer<ModuleRef, never, A>;
   protected rt: {
     runtime: Runtime.Runtime<A>;
