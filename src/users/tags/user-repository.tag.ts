@@ -8,5 +8,5 @@ export const UsersRepository = Context.Tag<Repository<UserEntity>>();
 
 export const UsersRepositoryLive = Layer.effect(
   UsersRepository,
-  Effect.map(ModuleRefTag, (_) => _.get(getRepositoryToken(UserEntity))),
+  Effect.map(ModuleRefTag, (_) => _.get(getRepositoryToken(UserEntity), { strict: false })),
 );
