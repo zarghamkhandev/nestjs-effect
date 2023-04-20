@@ -1,6 +1,9 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit, Type } from '@nestjs/common';
 import { Context, Effect, Exit, Layer, Runtime, Scope, pipe } from '../prelude';
 import { ModuleRef } from '@nestjs/core';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const ModuleRefTag = Context.Tag<ModuleRef>();
 
@@ -47,4 +50,13 @@ function buildRuntimeFromLayer<R, E, A>(layer: Layer.Layer<R, E, A>) {
 
 function buildRuntimeFromContext<A>(env: Context.Context<A>) {
   return Effect.provideContext(Effect.runtime<A>(), env);
+}
+
+export function getRepository(entity: EntityClassOrSchema, dataSource?: DataSource | DataSourceOptions | string) {
+  return getService(getRepositoryToken(entity, dataSource));
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function getService<TInput = any>(typeOrToken: Type<TInput> | Function | string | symbol) {
+  return Effect.map(ModuleRefTag, (_) => _.get(typeOrToken, { strict: false }));
 }
