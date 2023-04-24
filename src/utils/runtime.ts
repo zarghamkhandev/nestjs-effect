@@ -1,4 +1,10 @@
-import { Injectable, OnModuleDestroy, OnModuleInit, Type } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/ban-types */
+import {
+  Injectable,
+  OnModuleDestroy,
+  OnModuleInit,
+  Type,
+} from '@nestjs/common';
 import { Context, Effect, Exit, Layer, Runtime, Scope, pipe } from '../prelude';
 import { ModuleRef } from '@nestjs/core';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -9,7 +15,7 @@ export const ModuleRefTag = Context.Tag<ModuleRef>();
 
 @Injectable()
 export abstract class RuntimeBase<A> implements OnModuleInit, OnModuleDestroy {
-  constructor(private moduleRef: ModuleRef) { }
+  constructor(private moduleRef: ModuleRef) {}
   abstract layer: Layer.Layer<ModuleRef, never, A>;
   protected rt: {
     runtime: Runtime.Runtime<A>;
@@ -19,7 +25,12 @@ export abstract class RuntimeBase<A> implements OnModuleInit, OnModuleDestroy {
   // TODO: consider a global runtime, instead of one per module
   async onModuleInit() {
     this.rt = await Effect.runPromise(
-      buildRuntimeFromLayer(pipe(Layer.succeed(ModuleRefTag, this.moduleRef), Layer.provide(this.layer))),
+      buildRuntimeFromLayer(
+        pipe(
+          Layer.succeed(ModuleRefTag, this.moduleRef),
+          Layer.provide(this.layer),
+        ),
+      ),
     );
   }
 
@@ -30,6 +41,7 @@ export abstract class RuntimeBase<A> implements OnModuleInit, OnModuleDestroy {
   get runPromise() {
     return Runtime.runPromise(this.rt.runtime);
   }
+
   get runSync() {
     return Runtime.runSync(this.rt.runtime);
   }
@@ -52,11 +64,15 @@ function buildRuntimeFromContext<A>(env: Context.Context<A>) {
   return Effect.provideContext(Effect.runtime<A>(), env);
 }
 
-export function getRepository(entity: EntityClassOrSchema, dataSource?: DataSource | DataSourceOptions | string) {
+export function getRepository(
+  entity: EntityClassOrSchema,
+  dataSource?: DataSource | DataSourceOptions | string,
+) {
   return getService(getRepositoryToken(entity, dataSource));
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function getService<TInput = any>(typeOrToken: Type<TInput> | Function | string | symbol) {
+export function getService<TInput = any>(
+  typeOrToken: Type<TInput> | Function | string | symbol,
+) {
   return Effect.map(ModuleRefTag, (_) => _.get(typeOrToken, { strict: false }));
 }
