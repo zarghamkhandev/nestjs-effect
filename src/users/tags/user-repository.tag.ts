@@ -5,4 +5,7 @@ import { getRepository } from '../../utils/runtime';
 
 export const UsersRepository = Context.Tag<Repository<UserEntity>>();
 
-export const UsersRepositoryLive = Layer.effect(UsersRepository, getRepository(UserEntity));
+export const UsersRepositoryLive = Layer.effect(
+  UsersRepository,
+  getRepository(UserEntity),
+);
