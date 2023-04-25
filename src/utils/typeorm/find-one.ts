@@ -1,12 +1,15 @@
 import { ObjectLiteral, EntityTarget, FindOneOptions } from 'typeorm';
-import { Effect } from '../../prelude';
-import { DataSourceTag } from './data-source';
+import { Effect, pipe } from '../../prelude';
+import { EntityManager } from './manager';
 
 export function findOne<Entity extends ObjectLiteral>(
   entityClass: EntityTarget<Entity>,
   options: FindOneOptions<Entity>,
 ) {
-  return Effect.flatMap(DataSourceTag, (dataSource) =>
-    Effect.promise(() => dataSource.manager.findOne(entityClass, options)),
+  return pipe(
+    EntityManager,
+    Effect.flatMap((manager) =>
+      Effect.promise(() => manager.findOne(entityClass, options)),
+    ),
   );
 }
