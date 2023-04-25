@@ -4,7 +4,10 @@ import { CommonException } from '../../exceptions';
 import { UserEntity } from '../entities/user.entity';
 import { UsersRepository } from '../tags';
 
-export const getUsersEffect = pipe(UsersRepository, Effect.flatMap(tryFindUsers));
+export const getUsersEffect = pipe(
+  UsersRepository,
+  Effect.flatMap(tryFindUsers),
+);
 
 export function tryFindUsers(repo: Repository<UserEntity>) {
   return Effect.tryCatchPromise(
