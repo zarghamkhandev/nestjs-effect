@@ -5,11 +5,9 @@ import {
   OnModuleInit,
   Type,
 } from '@nestjs/common';
-import { Context, Effect, Exit, Layer, Runtime, Scope, pipe } from '../prelude';
 import { ModuleRef } from '@nestjs/core';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource, EntityTarget, ObjectLiteral } from 'typeorm';
+import { Context, Effect, Exit, Layer, Runtime, Scope, pipe } from '../prelude';
 
 export const ModuleRefTag = Context.Tag<ModuleRef>();
 
@@ -64,11 +62,13 @@ function buildRuntimeFromContext<A>(env: Context.Context<A>) {
   return Effect.provideContext(Effect.runtime<A>(), env);
 }
 
-export function getRepository(
-  entity: EntityClassOrSchema,
-  dataSource?: DataSource | DataSourceOptions | string,
+export function getRepository<T extends ObjectLiteral>(
+  entity: EntityTarget<T>,
 ) {
-  return getService(getRepositoryToken(entity, dataSource));
+  return pipe(
+    getService(DataSource),
+    Effect.map((dataSource) => dataSource.getRepository<T>(entity)),
+  );
 }
 
 export function getService<TInput = any>(
