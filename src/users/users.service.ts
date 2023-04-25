@@ -1,16 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { UsersRepositoryLive } from './tags';
-import { RuntimeBase } from '../utils/runtime';
-import { Repository } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { Layer, pipe } from '../prelude';
 import { ModuleRef } from '@nestjs/core';
+import { DataSource } from 'typeorm';
+import { Layer, pipe } from '../prelude';
+import { DataSourceLive, RuntimeBase } from '../utils';
 
-type Layers = Layer.Layer<ModuleRef, never, Repository<UserEntity>>;
+type Layers = Layer.Layer<ModuleRef, never, DataSource>;
 
-const layers: Layers = pipe(UsersRepositoryLive);
+const layers: Layers = pipe(DataSourceLive);
 
 @Injectable()
-export class UsersService extends RuntimeBase<Repository<UserEntity>> {
+export class UsersService extends RuntimeBase<DataSource> {
   override layer = layers;
 }

@@ -12,7 +12,7 @@ export class UserEntity {
   id?: string;
 
   @Column({ name: 'first_name', type: 'varchar' })
-  firstName: string;
+  firstName: string | null;
 
   @Column({ name: 'last_name', type: 'varchar' })
   lastName: string;
