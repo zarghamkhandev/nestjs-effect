@@ -4,4 +4,5 @@ export * from './find';
 export * from './create';
 export * from './save';
 export * from './manager';
+export * from './transaction';
 export * from './entity-class-or-schema';

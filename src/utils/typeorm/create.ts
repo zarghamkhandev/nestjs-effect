@@ -1,13 +1,13 @@
 import { DeepPartial, EntityTarget } from 'typeorm';
 import { Effect, pipe } from '../../prelude';
-import { EntityManager } from './manager';
+import { EntityManagerTag } from './manager';
 
 export function create<Entity>(
   entityClass: EntityTarget<Entity>,
   plainObject?: DeepPartial<Entity>,
 ) {
   return pipe(
-    EntityManager,
+    EntityManagerTag,
     Effect.map((manager) => manager.create(entityClass, plainObject)),
   );
 }

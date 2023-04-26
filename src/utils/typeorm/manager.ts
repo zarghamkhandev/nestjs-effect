@@ -1,7 +1,10 @@
-import { Effect } from '../../prelude';
-import { DataSourceTag } from './data-source';
+import { EntityManager } from 'typeorm';
+import { Context, Layer } from '../../prelude';
+import { getService } from '../runtime';
 
-export const EntityManager = Effect.map(
-  DataSourceTag,
-  (dataSource) => dataSource.manager,
+export const EntityManagerTag = Context.Tag<EntityManager>();
+
+export const EntityManagerLive = Layer.effect(
+  EntityManagerTag,
+  getService(EntityManager),
 );
