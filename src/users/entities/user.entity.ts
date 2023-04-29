@@ -4,9 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { ArticleEntity } from '../../article/entities/article.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -21,9 +19,6 @@ export class UserEntity {
 
   @Column({ type: 'varchar' })
   email: string;
-
-  @OneToMany(() => ArticleEntity, (article) => article.user)
-  articles?: ArticleEntity[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt?: Date;

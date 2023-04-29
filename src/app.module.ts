@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './config/data-source';
 import { UsersModule } from './users/users.module';
-import { ArticleModule } from './article/article.module';
+import { GlobalRuntimeModule } from './global.runtime';
 
 @Module({
   imports: [
@@ -17,8 +17,8 @@ import { ArticleModule } from './article/article.module';
       ...dataSourceOptions,
       autoLoadEntities: true,
     }),
+    GlobalRuntimeModule,
     UsersModule,
-    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

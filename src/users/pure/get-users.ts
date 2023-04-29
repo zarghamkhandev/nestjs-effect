@@ -1,6 +1,6 @@
-import { find, transaction } from '../../utils';
+import { EffectORM } from '../../utils';
 import { UserEntity } from '../entities/user.entity';
 
-export const findAll = find(UserEntity);
+export const findAll = EffectORM.find(UserEntity);
 
-export const getUsers = transaction(findAll);
+export const getUsers = EffectORM.transaction(findAll);

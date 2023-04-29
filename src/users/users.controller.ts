@@ -1,27 +1,27 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { createUser, getUser, getUsers } from './pure';
-import { UsersService } from './users.service';
+import { GlobalRuntime } from '../global.runtime';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly runtime: GlobalRuntime) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = await this.usersService.runPromise(createUser(createUserDto));
+    const user = await this.runtime.runPromise(createUser(createUserDto));
     return user;
   }
 
   @Get()
   async findAll() {
-    const users = await this.usersService.runPromise(getUsers);
+    const users = await this.runtime.runPromise(getUsers);
     return users;
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const user = await this.usersService.runPromise(getUser(id));
+    const user = await this.runtime.runPromise(getUser(id));
     return user;
   }
 

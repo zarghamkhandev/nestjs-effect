@@ -40,6 +40,10 @@ export abstract class RuntimeBase<A> implements OnModuleInit, OnModuleDestroy {
     return Runtime.runPromise(this.rt.runtime);
   }
 
+  get runPromiseEither() {
+    return Runtime.runPromiseEither(this.rt.runtime);
+  }
+
   get runSync() {
     return Runtime.runSync(this.rt.runtime);
   }

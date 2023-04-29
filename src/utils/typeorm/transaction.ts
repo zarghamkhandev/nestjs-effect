@@ -23,6 +23,7 @@ export function transaction<E, A>(self: Effect.Effect<EntityManager, E, A>) {
     Scope.make(),
     () => acquire,
     (scope) => {
+      // TODO: check how to handle errors here
       return Scope.close(scope, Exit.unit());
     },
   );
